@@ -1,22 +1,32 @@
+-- Типы материалов
 CREATE TABLE material_type (
     id SERIAL PRIMARY KEY,
     name TEXT,
     loss_percent DECIMAL(5, 4)
 );
 
+-- Типы продукции
 CREATE TABLE product_type (
     id SERIAL PRIMARY KEY,
     name TEXT,
     type_coefficient DECIMAL(5, 2)
 );
 
+-- Типы цехов (справочник)
+CREATE TABLE workshop_type (
+    id SERIAL PRIMARY KEY,
+    name TEXT
+);
+
+-- Цеха
 CREATE TABLE workshop (
     id SERIAL PRIMARY KEY,
     name TEXT,
-    type TEXT,
+    type_id INTEGER REFERENCES workshop_type(id),
     staff_count INTEGER
 );
 
+-- Продукты
 CREATE TABLE product (
     id SERIAL PRIMARY KEY,
     name TEXT,
@@ -26,6 +36,7 @@ CREATE TABLE product (
     material_type_id INTEGER REFERENCES material_type(id)
 );
 
+-- Связь продуктов и цехов
 CREATE TABLE product_workshop (
     id SERIAL PRIMARY KEY,
     product_id INTEGER REFERENCES product(id),
