@@ -1,0 +1,34 @@
+CREATE TABLE material_type (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    loss_percent DECIMAL(5, 4)
+);
+
+CREATE TABLE product_type (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    type_coefficient DECIMAL(5, 2)
+);
+
+CREATE TABLE workshop (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    type TEXT,
+    staff_count INTEGER
+);
+
+CREATE TABLE product (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    article INTEGER,
+    min_price INTEGER,
+    product_type_id INTEGER REFERENCES product_type(id),
+    material_type_id INTEGER REFERENCES material_type(id)
+);
+
+CREATE TABLE product_workshop (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER REFERENCES product(id),
+    workshop_id INTEGER REFERENCES workshop(id),
+    production_time_hours DECIMAL(4,2)
+);
